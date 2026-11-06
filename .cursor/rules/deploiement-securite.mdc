@@ -1,0 +1,19 @@
+---
+description: Checklist de sécurité à appliquer quand l'utilisateur déploie TrocVille
+alwaysApply: true
+---
+
+# Déploiement TrocVille
+
+Quand l'utilisateur déploie (ou demande de préparer le déploiement), appliquer ceci. Ne pas le refaire tant qu'on est en local.
+
+Déjà en place, à conserver : bcrypt, JWT, contrôles d'accès, SQL paramétré (`$1`, `$2`), tests dans `backend/tests/security.rules.test.js`. Pas d'IA dans l'app : ne pas ajouter d'audit de prompt.
+
+Au déploiement :
+
+- HTTPS devant l'API. L'app mobile ne doit plus appeler une IP en `http://`.
+- Remplacer `JWT_SECRET` (`change_me`) et le mot de passe Postgres (`postgres`) par des secrets forts. Ne pas committer `.env`.
+- Ne pas exposer le port `5432` sur Internet. Seule l'API est publique.
+- Restreindre `cors()` dans `backend/src/app.js` à l'origine de l'app, au lieu de tout accepter.
+- Garder `GET /health` pour le suivi. Le CPU, la RAM et le disque viennent du panneau de l'hébergeur (OVH ou autre), pas d'un écran dans l'app.
+- Cloudflare est optionnel, seulement si le service est public et qu'on veut filtrer le trafic devant le serveur.

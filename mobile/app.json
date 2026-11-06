@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "TrocVille",
+    "slug": "trocville",
+    "scheme": "trocville",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "TrocVille utilise l’appareil photo pour photographier tes objets.",
+        "NSPhotoLibraryUsageDescription": "TrocVille utilise ta pellicule pour choisir la photo de tes objets.",
+        "NSAppTransportSecurity": {
+          "NSAllowsLocalNetworking": true,
+          "NSAllowsArbitraryLoads": true
+        }
+      }
+    },
+    "android": {},
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-status-bar",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "TrocVille a besoin de l’appareil photo pour photographier tes objets.",
+          "photosPermission": "TrocVille peut utiliser une photo déjà prise de ton objet."
+        }
+      ],
+      "expo-secure-store",
+      "expo-font",
+      "expo-web-browser"
+    ]
+  }
+}

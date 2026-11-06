@@ -1,0 +1,6 @@
+node_modules/
+.expo/
+dist/
+.env
+backend/uploads/
+secret.md
