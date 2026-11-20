@@ -1,4 +1,11 @@
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:4000/api';
+const isPublicApi = API_BASE_URL.startsWith('https://');
+const requestTimeoutMs = isPublicApi ? 60000 : 10000;
+
+const offlineMessage = () =>
+  isPublicApi
+    ? 'Le serveur met du temps à répondre. Réessaie dans un instant.'
+    : 'L’API ne répond pas. Vérifie Docker et le Wi-Fi (même réseau que le PC).';
 
 export const API_ORIGIN = API_BASE_URL.replace(/\/api$/, '');
 
@@ -29,7 +36,7 @@ async function request(path, options = {}) {
   }
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000);
+  const timeoutId = setTimeout(() => controller.abort(), requestTimeoutMs);
 
   try {
     const response = await fetch(`${API_BASE_URL}${path}`, {
@@ -53,7 +60,7 @@ async function request(path, options = {}) {
     return response.json();
   } catch (error) {
     if (error.name === 'AbortError') {
-      throw new Error('L’API ne répond pas. Vérifie Docker et le Wi-Fi (même réseau que le PC).');
+      throw new Error(offlineMessage());
     }
     throw error;
   } finally {
