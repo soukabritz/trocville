@@ -12,7 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AuthContext } from '../../context/AuthContext';
 import { colors, fonts } from '../../theme';
 import LogoMark from '../../components/LogoMark';
-import GoogleSignInButton from '../../components/GoogleSignInButton';
+import GoogleSignInButton, { takePendingGoogleTerms } from '../../components/GoogleSignInButton';
 import FieldError from '../../components/FieldError';
 import TermsConsent from '../../components/TermsConsent';
 import PasswordInput from '../../components/PasswordInput';
@@ -24,7 +24,7 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [fields, setFields] = useState({});
-  const [accepted, setAccepted] = useState(false);
+  const [accepted, setAccepted] = useState(takePendingGoogleTerms);
   const [loading, setLoading] = useState(false);
 
   const clearField = (name) => {
@@ -150,7 +150,12 @@ export default function LoginScreen({ navigation }) {
         onOpen={(kind) => navigation.navigate('Legal', { kind })}
         error={fields.acceptTerms}
       />
-      <GoogleSignInButton disabled={loading} onSession={onGoogle} onError={setError} />
+      <GoogleSignInButton
+        disabled={loading}
+        accepted={accepted}
+        onSession={onGoogle}
+        onError={setError}
+      />
 
       <Pressable
         onPress={() => navigation.navigate('Register')}

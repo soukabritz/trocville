@@ -13,7 +13,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { colors, fonts } from '../../theme';
 import StackScrollGuard from '../../components/StackScrollGuard';
 import useStackHeaderInset from '../../components/useStackHeaderInset';
-import GoogleSignInButton from '../../components/GoogleSignInButton';
+import GoogleSignInButton, { takePendingGoogleTerms } from '../../components/GoogleSignInButton';
 import FieldError from '../../components/FieldError';
 import TermsConsent from '../../components/TermsConsent';
 import PasswordInput from '../../components/PasswordInput';
@@ -31,7 +31,7 @@ export default function RegisterScreen({ navigation }) {
   const [cityConfirmed, setCityConfirmed] = useState(false);
   const [error, setError] = useState('');
   const [fields, setFields] = useState({});
-  const [accepted, setAccepted] = useState(false);
+  const [accepted, setAccepted] = useState(takePendingGoogleTerms);
   const [loading, setLoading] = useState(false);
 
   const openLegal = (kind) => navigation.navigate('Legal', { kind });
@@ -219,7 +219,12 @@ export default function RegisterScreen({ navigation }) {
       )}
 
       <Text style={styles.or}>ou</Text>
-      <GoogleSignInButton disabled={loading} onSession={onGoogle} onError={setError} />
+      <GoogleSignInButton
+        disabled={loading}
+        accepted={accepted}
+        onSession={onGoogle}
+        onError={setError}
+      />
 
       <Pressable onPress={() => navigation.goBack()} accessibilityRole="link" accessibilityLabel="Retour connexion">
         <Text style={styles.link}>Déjà un compte ? Connexion</Text>
