@@ -1,9 +1,4 @@
-import { Platform } from 'react-native';
-
-const API_BASE_URL =
-  Platform.OS === 'web'
-    ? 'http://localhost:4000/api'
-    : process.env.EXPO_PUBLIC_API_URL || 'http://localhost:4000/api';
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:4000/api';
 
 export const API_ORIGIN = API_BASE_URL.replace(/\/api$/, '');
 

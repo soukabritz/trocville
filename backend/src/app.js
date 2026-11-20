@@ -18,6 +18,8 @@ const { notFoundHandler, errorHandler } = require('./middlewares/error.middlewar
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 40,
@@ -26,9 +28,15 @@ const authLimiter = rateLimit({
   message: { message: 'Trop de tentatives. Réessaie dans quelques minutes.' }
 });
 
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' }
+}));
 app.use(cookieParser());
-app.use(cors());
+
+const clientOrigin = process.env.CLIENT_ORIGIN;
+app.use(cors(clientOrigin
+  ? { origin: clientOrigin.split(',').map((value) => value.trim()).filter(Boolean) }
+  : undefined));
 app.use(express.json({ limit: '200kb' }));
 app.use(morgan('dev'));
 app.use('/api/auth', authLimiter);
