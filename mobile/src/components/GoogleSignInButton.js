@@ -73,7 +73,7 @@ export default function GoogleSignInButton({ disabled, onSession, onError }) {
       <Pressable
         style={styles.button}
         onPress={() =>
-          onError('Ajoute l’identifiant Google depuis Google Cloud Console dans mobile/.env.')
+          onError('La connexion Google n’est pas disponible pour le moment.')
         }
         accessibilityRole="button"
         accessibilityLabel="Continuer avec Gmail"

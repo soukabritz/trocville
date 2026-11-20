@@ -26,6 +26,8 @@ services:
         value: "true"
       - key: CLIENT_ORIGIN
         value: https://trocville-soukabritz.onrender.com
+      - key: GOOGLE_CLIENT_IDS
+        value: 940470178084-q67n7nev77582920ggtf854rimtp03ai.apps.googleusercontent.com,940470178084-qg6o7joeand6iovm050cabat4pt5dfvj.apps.googleusercontent.com
 
   - type: web
     name: trocville-soukabritz
@@ -38,6 +40,10 @@ services:
         value: "20"
       - key: EXPO_PUBLIC_API_URL
         value: https://trocville-soukabritz-api.onrender.com/api
+      - key: EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID
+        value: 940470178084-q67n7nev77582920ggtf854rimtp03ai.apps.googleusercontent.com
+      - key: EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID
+        value: 940470178084-qg6o7joeand6iovm050cabat4pt5dfvj.apps.googleusercontent.com
     routes:
       - type: rewrite
         source: /*
